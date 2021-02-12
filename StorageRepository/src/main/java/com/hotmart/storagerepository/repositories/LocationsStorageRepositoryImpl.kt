@@ -1,5 +1,8 @@
 package com.hotmart.storagerepository.repositories
 
-class LocationsStorageRepositoryImpl {
+import com.hotmart.datarepository.storageRepository.LocationsStorageRepository
+
+
+class LocationsStorageRepositoryImpl: LocationsStorageRepository {
 
 }
