@@ -1,0 +1,50 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'realm-android'
+
+android {
+    compileSdkVersion application.compileSdkVersion
+
+    defaultConfig {
+        applicationId application.packageName
+        minSdkVersion application.minSdkVersion
+        targetSdkVersion application.targetSdkVersion
+        versionCode application.gitVersion
+        versionName application.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            buildConfigField "String", "API_URL", "\"https://hotmart-mobile-app.herokuapp.com/\""
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "API_URL", "\"https://hotmart-mobile-app.herokuapp.com/\""
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
+dependencies {
+    presentationDep.each {
+        add(it.configuration, it.dependency)
+    }
+    implementation project(":Domain")
+    implementation project(":DataRepository")
+    implementation project(":RemoteRepository")
+    implementation project(":StorageRepository")
+}

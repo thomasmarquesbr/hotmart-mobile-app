@@ -1,0 +1,101 @@
+ext {
+
+    application = [
+            kotlinVersion: "1.4.10",
+            navVersion: "1.0.0",
+            minSdkVersion: 21,
+            targetSdkVersion: 28,
+            compileSdkVersion: 28,
+            buildToolsVersion: "28.0.0",
+            packageName : "com.hotmart.thomas",
+            versionName : "1.0",
+            versionCode : 1,
+    ]
+
+    sharedDep = [
+        kotlinStdlib: "org.jetbrains.kotlin:kotlin-stdlib:1.3.31",
+        coreKtx: "androidx.core:core-ktx:1.3.2",
+        appCompat: "androidx.appcompat:appcompat:1.2.0",
+        material: "com.google.android.material:material:1.2.1",
+        jUnit: "junit:junit:4.13.1",
+        jUnitExt: "androidx.test.ext:junit:1.1.2",
+        rxJava: "io.reactivex.rxjava2:rxjava:2.2.6",
+        rxAndroid: "io.reactivex.rxjava2:rxandroid:2.1.1"
+    ]
+
+    presentationDep = [
+            [configuration: "implementation", dependency: sharedDep.kotlinStdlib],
+            [configuration: "implementation", dependency: sharedDep.coreKtx],
+            [configuration: "implementation", dependency: sharedDep.appCompat],
+            [configuration: "implementation", dependency: sharedDep.material],
+            [configuration: "implementation", dependency: "androidx.constraintlayout:constraintlayout:1.1.3"],
+            [configuration: "implementation", dependency: "org.koin:koin-android:2.0.1"],
+            [configuration: "implementation", dependency: "org.koin:koin-core-ext:2.0.1"],
+            [configuration: "implementation", dependency: "org.koin:koin-android-scope:2.0.1"],
+            [configuration: "implementation", dependency: "org.koin:koin-android-viewmodel:2.0.1"],
+            [configuration: "implementation", dependency: "io.reactivex.rxjava2:rxjava:2.2.6"],
+            [configuration: "implementation", dependency: "io.reactivex.rxjava2:rxandroid:2.1.1"],
+            [configuration: "implementation", dependency: "io.reactivex.rxjava2:rxkotlin:2.2.0"],
+            [configuration: "testImplementation", dependency: sharedDep.jUnit],
+            [configuration: "androidTestImplementation", dependency: sharedDep.jUnitExt],
+            [configuration: "androidTestImplementation", dependency: "androidx.test.espresso:espresso-core:3.3.0"]
+    ]
+
+    domainDep = [
+            [configuration: "implementation", dependency: sharedDep.kotlinStdlib],
+            [configuration: "implementation", dependency: sharedDep.coreKtx],
+            [configuration: "implementation", dependency: sharedDep.appCompat],
+            [configuration: "implementation", dependency: sharedDep.material],
+            [configuration: "implementation", dependency: sharedDep.rxJava],
+            [configuration: "implementation", dependency: sharedDep.rxAndroid],
+            [configuration: "implementation", dependency: "com.google.code.gson:gson:2.8.6"],
+            [configuration: "testImplementation", dependency: sharedDep.jUnit],
+            [configuration: "androidTestImplementation", dependency: sharedDep.jUnitExt]
+    ]
+
+    dataRepositoryDep = [
+            [configuration: "implementation", dependency: sharedDep.kotlinStdlib],
+            [configuration: "implementation", dependency: sharedDep.coreKtx],
+            [configuration: "implementation", dependency: sharedDep.appCompat],
+            [configuration: "implementation", dependency: sharedDep.material],
+            [configuration: "implementation", dependency: "org.koin:koin-android:2.0.1"],
+            [configuration: "implementation", dependency: "org.koin:koin-core-ext:2.0.1"],
+            [configuration: "implementation", dependency: sharedDep.rxJava],
+            [configuration: "implementation", dependency: "com.squareup.okhttp3:okhttp:4.8.0"],
+            [configuration: "implementation", dependency: "com.squareup.okhttp3:logging-interceptor:4.8.0"],
+            [configuration: "testImplementation", dependency: sharedDep.jUnit],
+            [configuration: "androidTestImplementation", dependency: sharedDep.jUnitExt]
+    ]
+
+    remoteRepositoryDep = [
+            [configuration: "implementation", dependency: sharedDep.kotlinStdlib],
+            [configuration: "implementation", dependency: sharedDep.coreKtx],
+            [configuration: "implementation", dependency: sharedDep.appCompat],
+            [configuration: "implementation", dependency: sharedDep.material],
+            [configuration: "implementation", dependency: "org.koin:koin-android:2.0.1"],
+            [configuration: "implementation", dependency: "org.koin:koin-core-ext:2.0.1"],
+            [configuration: "implementation", dependency: sharedDep.rxJava],
+            [configuration: "implementation", dependency: "com.squareup.retrofit2:retrofit:2.7.1"],
+            [configuration: "implementation", dependency: "com.squareup.retrofit2:adapter-rxjava2:2.7.1"],
+            [configuration: "implementation", dependency: "com.squareup.retrofit2:converter-gson:2.7.1"],
+            [configuration: "implementation", dependency: "com.squareup.okhttp3:okhttp:4.8.0"],
+            [configuration: "implementation", dependency: "com.squareup.okhttp3:logging-interceptor:4.8.0"],
+            [configuration: "implementation", dependency: "com.facebook.stetho:stetho-okhttp3:1.5.1"],
+            [configuration: "implementation", dependency: "com.google.code.gson:gson:2.8.6"],
+            [configuration: "testImplementation", dependency: sharedDep.jUnit],
+            [configuration: "androidTestImplementation", dependency: sharedDep.jUnitExt]
+    ]
+
+    storageRepositoryDep = [
+            [configuration: "implementation", dependency: sharedDep.kotlinStdlib],
+            [configuration: "implementation", dependency: sharedDep.coreKtx],
+            [configuration: "implementation", dependency: sharedDep.appCompat],
+            [configuration: "implementation", dependency: sharedDep.material],
+            [configuration: "implementation", dependency: sharedDep.rxJava],
+            [configuration: "implementation", dependency: sharedDep.rxAndroid],
+            [configuration: "implementation", dependency: "com.github.vicpinm:krealmextensions:2.5.0"],
+            [configuration: "testImplementation", dependency: sharedDep.jUnit],
+            [configuration: "androidTestImplementation", dependency: sharedDep.jUnitExt]
+    ]
+
+}
