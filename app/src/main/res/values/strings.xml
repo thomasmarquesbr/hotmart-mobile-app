@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Hotmart Mobile App</string>
+    <string name="unexpected_error_get_locations">Erro inesperado ao buscar localizações</string>
 </resources>

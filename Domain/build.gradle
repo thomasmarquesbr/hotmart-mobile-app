@@ -6,7 +6,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
 
 android {
-    compileSdkVersion application.compileSdkVersion
+    compileSdkVersion application.targetSdkVersion
     buildToolsVersion application.buildToolsVersion
 
     defaultConfig {

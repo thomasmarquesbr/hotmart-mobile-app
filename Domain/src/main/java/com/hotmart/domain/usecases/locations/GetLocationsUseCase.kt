@@ -1,5 +1,6 @@
 package com.hotmart.domain.usecases.locations
 
+import com.hotmart.domain.models.presentation.Location
 import com.hotmart.domain.repositories.LocationsRepository
 import com.hotmart.domain.usecases.base.FlowableUseCase
 import com.hotmart.domain.usecases.base.PostExecutionThread
@@ -11,9 +12,9 @@ class GetLocationsUseCase(
     private val locationsRepository: LocationsRepository,
     threadExecutor: ThreadExecutor,
     postExecutionThread: PostExecutionThread
-): FlowableUseCase<Any>(threadExecutor, postExecutionThread) {
+): FlowableUseCase<List<Location>>(threadExecutor, postExecutionThread) {
 
-    fun execute(): Flowable<Any> = subscribeAndObserve(
+    fun execute(): Flowable<List<Location>> = subscribeAndObserve(
         locationsRepository.getLocations()
     )
 
