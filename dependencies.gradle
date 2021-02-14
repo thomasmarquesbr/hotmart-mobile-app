@@ -36,6 +36,8 @@ ext {
             [configuration: "implementation", dependency: "io.reactivex.rxjava2:rxjava:2.2.6"],
             [configuration: "implementation", dependency: "io.reactivex.rxjava2:rxandroid:2.1.1"],
             [configuration: "implementation", dependency: "io.reactivex.rxjava2:rxkotlin:2.2.0"],
+            [configuration: "implementation", dependency: "androidx.navigation:navigation-fragment-ktx:2.3.3"],
+            [configuration: "implementation", dependency: "androidx.navigation:navigation-ui-ktx:2.3.3"],
             [configuration: "testImplementation", dependency: sharedDep.jUnit],
             [configuration: "androidTestImplementation", dependency: sharedDep.jUnitExt],
             [configuration: "androidTestImplementation", dependency: "androidx.test.espresso:espresso-core:3.3.0"]

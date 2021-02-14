@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/tab1">
+
+    <fragment
+        android:id="@+id/tab1"
+        android:name="com.hotmart.thomas.ui.fagments.HomeFragment"
+        android:label="@string/home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/tab2"
+        android:name="com.hotmart.thomas.ui.fagments.MapFragment"
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/tab3"
+        android:name="com.hotmart.thomas.ui.fagments.ProfileFragment"
+        android:label="@string/map"
+        tools:layout="@layout/fragment_map" />
+</navigation>

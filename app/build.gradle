@@ -34,8 +34,8 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        viewBinding = true
+    viewBinding {
+        enabled = true
     }
 }
 
@@ -47,4 +47,6 @@ dependencies {
     implementation project(":DataRepository")
     implementation project(":RemoteRepository")
     implementation project(":StorageRepository")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }

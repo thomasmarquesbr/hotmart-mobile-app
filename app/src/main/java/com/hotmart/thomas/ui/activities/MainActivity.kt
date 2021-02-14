@@ -2,45 +2,45 @@ package com.hotmart.thomas.ui.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.hotmart.domain.models.presentation.Location
-import com.hotmart.domain.models.presentation.ResultState
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import com.hotmart.thomas.R
-import com.hotmart.thomas.ui.viewmodels.MainViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import com.hotmart.thomas.databinding.ActivityMainBinding
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity: AppCompatActivity() {
 
-    private val viewModel: MainViewModel by viewModel()
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_HotmartMobileApp)
-        setContentView(R.layout.activity_main)
-
-        viewModel.locationsLiveData.observe(this, { state ->
-            when (state) {
-                is ResultState.Success -> setupScreenForSuccessGetLocations(state.data)
-                is ResultState.Loading -> setupScreenForLoadingGetLocations()
-                is ResultState.Error -> setupScreenForErrorGetLocations(state.errorMessage)
-            }
-        })
-        viewModel.getLocations()
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        initializeViews()
     }
 
-    /** locationsLiveData **/
-
-    private fun setupScreenForSuccessGetLocations(data: List<Location>?) {
-        data?.let {
-
-        } ?: setupScreenForErrorGetLocations(getString(R.string.unexpected_error_get_locations))
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
-    private fun setupScreenForLoadingGetLocations() {
+    private fun initializeViews() {
+        setupNavigation()
+    }
+
+    private fun initializeViewModelObservers() {
 
     }
 
-    private fun setupScreenForErrorGetLocations(errorMessage: String?) {
-
+    private fun setupNavigation() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_sale) as NavHostFragment
+        NavigationUI.setupWithNavController(binding.bottomNavigation, navHostFragment.navController)
+        navHostFragment.navController.addOnDestinationChangedListener { _, destination, _ ->
+            title = destination.label.toString()
+        }
     }
+
 }
