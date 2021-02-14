@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Hotmart Mobile App</string>
+    <string name="unexpected_error_get_locations">Erro inesperado ao buscar localizações</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="map">Mapa</string>
+    <string name="profile">Perfil</string>
 </resources>
