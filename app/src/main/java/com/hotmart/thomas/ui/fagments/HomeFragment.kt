@@ -1,14 +1,20 @@
 package com.hotmart.thomas.ui.fagments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.hotmart.domain.models.presentation.Location
 import com.hotmart.domain.models.presentation.ResultState
 import com.hotmart.thomas.R
 import com.hotmart.thomas.databinding.FragmentHomeBinding
+import com.hotmart.thomas.ui.adapters.LocationsAdapter
+import com.hotmart.thomas.ui.extensions.showError
 import com.hotmart.thomas.ui.viewmodels.MainViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -18,6 +24,7 @@ class HomeFragment: Fragment() {
     private val viewModel: MainViewModel by viewModel()
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var locationsAdapter: LocationsAdapter
 
     /** LifeCycle **/
 
@@ -46,19 +53,38 @@ class HomeFragment: Fragment() {
 
     private fun setupScreenForSuccessGetLocations(data: List<Location>?) {
         data?.let {
-
+            binding.pbLoading.visibility = View.GONE
+            binding.rvLocations.visibility = View.VISIBLE
+            locationsAdapter.locations = it
         } ?: setupScreenForErrorGetLocations(getString(R.string.unexpected_error_get_locations))
     }
 
     private fun setupScreenForLoadingGetLocations() {
-
+        binding.pbLoading.visibility = View.VISIBLE
+        binding.rvLocations.visibility = View.GONE
     }
 
     private fun setupScreenForErrorGetLocations(errorMessage: String?) {
-
+        binding.pbLoading.visibility = View.GONE
+        binding.rvLocations.visibility = View.VISIBLE
+        Snackbar.make(
+            requireView(),
+            errorMessage ?: getString(R.string.unexpected_error_get_locations),
+            Snackbar.LENGTH_LONG
+        ).showError()
     }
 
+    /** Functions **/
+
     private fun initializeViews() {
+        locationsAdapter = LocationsAdapter(
+            requireContext(),
+            onItemClicked = { location ->
+                Log.d("ItemClicked", location.name)
+            })
+        binding.rvLocations.adapter = locationsAdapter
+        binding.rvLocations.layoutManager = StaggeredGridLayoutManager(2,
+            LinearLayoutManager.VERTICAL)
         viewModel.getLocations()
     }
 

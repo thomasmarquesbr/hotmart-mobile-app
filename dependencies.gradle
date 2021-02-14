@@ -38,6 +38,8 @@ ext {
             [configuration: "implementation", dependency: "io.reactivex.rxjava2:rxkotlin:2.2.0"],
             [configuration: "implementation", dependency: "androidx.navigation:navigation-fragment-ktx:2.3.3"],
             [configuration: "implementation", dependency: "androidx.navigation:navigation-ui-ktx:2.3.3"],
+            [configuration: "implementation", dependency: "com.github.bumptech.glide:glide:4.12.0"],
+            [configuration: "annotationProcessor", dependency: "com.github.bumptech.glide:compiler:4.12.0"],
             [configuration: "testImplementation", dependency: sharedDep.jUnit],
             [configuration: "androidTestImplementation", dependency: sharedDep.jUnitExt],
             [configuration: "androidTestImplementation", dependency: "androidx.test.espresso:espresso-core:3.3.0"]

@@ -30,7 +30,7 @@ class LocationsRepositoryImpl(
                 storage.saveLocations(listLocationEntity)
                 listLocationEntity
             }.map { list ->
-                list.map { Location(it) }
+                list.map { Location(it) }.sortedBy { it.id }
             }
 
 }
