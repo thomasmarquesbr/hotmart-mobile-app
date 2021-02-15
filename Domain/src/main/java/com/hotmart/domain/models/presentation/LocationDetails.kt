@@ -22,15 +22,15 @@ class LocationDetails(
         locationDetailsResponse.about,
         locationDetailsResponse.phone,
         locationDetailsResponse.adress,
-        locationDetailsResponse.schedule.map { scheduleResponse ->
+        locationDetailsResponse.schedules.map { scheduleResponse ->
             Schedule(
-                ScheduleDay(scheduleResponse.sunday.open, scheduleResponse.sunday.close),
-                ScheduleDay(scheduleResponse.monday.open, scheduleResponse.monday.close),
-                ScheduleDay(scheduleResponse.tuesday.open, scheduleResponse.tuesday.close),
-                ScheduleDay(scheduleResponse.wednesday.open, scheduleResponse.wednesday.close),
-                ScheduleDay(scheduleResponse.thursday.open, scheduleResponse.thursday.close),
-                ScheduleDay(scheduleResponse.friday.open, scheduleResponse.friday.close),
-                ScheduleDay(scheduleResponse.saturday.open, scheduleResponse.saturday.close)
+                ScheduleDay(scheduleResponse.sunday?.open ?: "", scheduleResponse.sunday?.close ?: ""),
+                ScheduleDay(scheduleResponse.monday?.open ?: "", scheduleResponse.monday?.close ?: ""),
+                ScheduleDay(scheduleResponse.tuesday?.open ?: "", scheduleResponse.tuesday?.close ?: ""),
+                ScheduleDay(scheduleResponse.wednesday?.open ?: "", scheduleResponse.wednesday?.close ?: ""),
+                ScheduleDay(scheduleResponse.thursday?.open ?: "", scheduleResponse.thursday?.close ?: ""),
+                ScheduleDay(scheduleResponse.friday?.open ?: "", scheduleResponse.friday?.close ?: ""),
+                ScheduleDay(scheduleResponse.saturday?.open ?: "", scheduleResponse.saturday?.close ?: "")
             )
         }
     )
