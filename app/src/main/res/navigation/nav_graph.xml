@@ -9,7 +9,11 @@
         android:id="@+id/tab1"
         android:name="com.hotmart.thomas.ui.fagments.HomeFragment"
         android:label="@string/home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_tab1_to_locationDetailsFragment"
+            app:destination="@id/locationDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/tab2"
         android:name="com.hotmart.thomas.ui.fagments.MapFragment"
@@ -20,4 +24,17 @@
         android:name="com.hotmart.thomas.ui.fagments.ProfileFragment"
         android:label="@string/map"
         tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/locationDetailsFragment"
+        android:name="com.hotmart.thomas.ui.fagments.LocationDetailsFragment"
+        tools:layout="@layout/fragment_location_details">
+        <argument
+            android:name="location"
+            app:argType="com.hotmart.domain.models.presentation.Location" />
+        <action
+            android:id="@+id/action_locationDetailsFragment_to_tab1"
+            app:destination="@id/tab1"
+            app:popUpTo="@id/tab1"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

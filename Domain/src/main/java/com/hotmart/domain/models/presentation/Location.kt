@@ -1,14 +1,17 @@
 package com.hotmart.domain.models.presentation
 
+import android.os.Parcelable
 import com.hotmart.domain.models.entities.LocationEntity
+import kotlinx.android.parcel.Parcelize
 
 
+@Parcelize
 class Location(
         val id: Int,
         val name: String,
         val review: Double,
         val type: String
-) {
+): Parcelable {
 
     constructor(locationResponse: LocationEntity): this(
             locationResponse.id ?: -1,
