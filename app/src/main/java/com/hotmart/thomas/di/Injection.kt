@@ -8,6 +8,7 @@ import com.hotmart.domain.usecases.base.JobExecutor
 import com.hotmart.domain.usecases.base.PostExecutionThread
 import com.hotmart.domain.usecases.base.ThreadExecutor
 import com.hotmart.domain.usecases.base.UiThread
+import com.hotmart.domain.usecases.locations.GetLocationDetailsUseCase
 import com.hotmart.domain.usecases.locations.GetLocationsUseCase
 import com.hotmart.remoterepository.api.ApiServiceFactory
 import com.hotmart.remoterepository.repositories.LocationsRemoteRepositoryImpl
@@ -42,8 +43,9 @@ val domainModule = module(override = true) {
     single { UiThread() as PostExecutionThread }
 
     factory { GetLocationsUseCase(get(), get(), get()) }
+    factory { GetLocationDetailsUseCase(get(), get(), get()) }
 }
 
 val presentationModule = module(override = true) {
-    viewModel { MainViewModel(get()) }
+    viewModel { MainViewModel(get(), get()) }
 }

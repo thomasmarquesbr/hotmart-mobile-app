@@ -4,6 +4,7 @@ import com.hotmart.datarepository.remoteRepository.LocationsRemoteRepository
 import com.hotmart.datarepository.storageRepository.LocationsStorageRepository
 import com.hotmart.domain.models.entities.LocationEntity
 import com.hotmart.domain.models.presentation.Location
+import com.hotmart.domain.models.presentation.LocationDetails
 import com.hotmart.domain.repositories.LocationsRepository
 import io.reactivex.Flowable
 
@@ -32,5 +33,11 @@ class LocationsRepositoryImpl(
             }.map { list ->
                 list.map { Location(it) }.sortedBy { it.id }
             }
+
+    override fun getLocationDetails(id: Int): Flowable<LocationDetails> = remote
+        .getLocationDetails(id)
+        .map { res ->
+            LocationDetails(res)
+        }
 
 }
