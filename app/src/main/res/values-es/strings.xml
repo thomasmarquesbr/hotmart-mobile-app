@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Aplicación móvil Hotmart</string>
+    <string name="unexpected_error_get_locations">Error inesperado al obtener ubicaciones</string>
+    <string name="hello_blank_fragment">Hola fragmento en blanco</string>
+    <string name="home">Inicio</string>
+    <string name="map">Mapa</string>
+    <string name="profile">Perfil</string>
+    <string name="action_share">Compartir</string>
+    <string name="unexpected_error_get_location_details">Error inesperado al obtener detalles</string>
+    <string name="photos">Fotos</string>
+    <string name="about">Acerca de</string>
+    <string name="reviews">Reseñas</string>
+    <string name="see_more_reviews">Ver todas las reseñas de %d >></string>
+</resources>

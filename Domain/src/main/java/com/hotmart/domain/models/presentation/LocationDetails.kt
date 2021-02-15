@@ -44,6 +44,7 @@ class LocationDetails(
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeYEuEbi_mLxVkbkSN9XOuqFlT23KvngDZ9g&usqp=CAU"
     )
 
+    var totalReviews = 146
     var reviews = listOf(
         Review(
             4.9,

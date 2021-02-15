@@ -11,5 +11,5 @@
     <string name="photos">Fotos</string>
     <string name="about">Sobre</string>
     <string name="reviews">Reviews</string>
-    <string name="see_more_reviews">Ver todos os %s reviews >></string>
+    <string name="see_more_reviews">Ver todos os %d reviews >></string>
 </resources>

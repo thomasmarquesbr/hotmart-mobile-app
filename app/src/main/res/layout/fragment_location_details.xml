@@ -171,7 +171,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rv_reviews"
             app:layout_constraintVertical_bias="1"
-            tools:text="@string/see_more_reviews" />
+            tools:text="@string/see_more_reviews"
+            android:layout_marginBottom="16dp"/>
 
         <ProgressBar
             android:id="@+id/pb_loading"

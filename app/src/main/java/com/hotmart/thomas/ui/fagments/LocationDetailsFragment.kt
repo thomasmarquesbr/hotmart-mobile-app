@@ -143,6 +143,7 @@ class LocationDetailsFragment : Fragment() {
             tvAboutContent.text = locationDetails.about
             tvPhone.text = locationDetails.phone
             tvAddress.text = locationDetails.adress
+            tvSeeMore.text = getString(R.string.see_more_reviews, locationDetails.totalReviews)
         }
         setSchedule(locationDetails.schedule)
         photosAdapter.photos = locationDetails.images
