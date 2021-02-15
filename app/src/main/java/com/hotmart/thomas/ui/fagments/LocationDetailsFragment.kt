@@ -5,16 +5,21 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.hotmart.domain.models.presentation.Location
 import com.hotmart.domain.models.presentation.LocationDetails
 import com.hotmart.domain.models.presentation.ResultState
+import com.hotmart.domain.models.presentation.Schedule
 import com.hotmart.thomas.R
 import com.hotmart.thomas.databinding.FragmentLocationDetailsBinding
 import com.hotmart.thomas.ui.activities.MainActivity
+import com.hotmart.thomas.ui.adapters.PhotosAdapter
 import com.hotmart.thomas.ui.extensions.navigateWithAnimations
 import com.hotmart.thomas.ui.extensions.showError
 import com.hotmart.thomas.ui.viewmodels.MainViewModel
+import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -26,6 +31,7 @@ class LocationDetailsFragment : Fragment() {
     private val binding get() = _binding!!
     private val mActivity by lazy { activity as MainActivity }
     private lateinit var location: Location
+    private lateinit var photosAdapter: PhotosAdapter
 
     /** LifeCycle **/
 
@@ -114,6 +120,10 @@ class LocationDetailsFragment : Fragment() {
     }
 
     private fun initializeViews() {
+        photosAdapter = PhotosAdapter(requireContext())
+        binding.rvPhotos.adapter = photosAdapter
+        binding.rvPhotos.layoutManager = LinearLayoutManager(requireContext(),
+            LinearLayoutManager.HORIZONTAL, false)
         mActivity.run {
             showHomeButton()
             title = location.name
@@ -126,7 +136,15 @@ class LocationDetailsFragment : Fragment() {
     private fun setDetails(locationDetails: LocationDetails) {
         binding.run {
             tvAboutContent.text = locationDetails.about
+            tvPhone.text = locationDetails.phone
+            tvAddress.text = locationDetails.adress
         }
+        setSchedule(locationDetails.schedule)
+        photosAdapter.photos = locationDetails.images
+    }
+
+    private fun setSchedule(schedule: List<Schedule>) {
+
     }
 
     private fun showAllViews() {
