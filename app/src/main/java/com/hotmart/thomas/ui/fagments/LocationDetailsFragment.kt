@@ -16,6 +16,7 @@ import com.hotmart.thomas.R
 import com.hotmart.thomas.databinding.FragmentLocationDetailsBinding
 import com.hotmart.thomas.ui.activities.MainActivity
 import com.hotmart.thomas.ui.adapters.PhotosAdapter
+import com.hotmart.thomas.ui.adapters.ReviewsAdapter
 import com.hotmart.thomas.ui.extensions.navigateWithAnimations
 import com.hotmart.thomas.ui.extensions.showError
 import com.hotmart.thomas.ui.viewmodels.MainViewModel
@@ -32,6 +33,7 @@ class LocationDetailsFragment : Fragment() {
     private val mActivity by lazy { activity as MainActivity }
     private lateinit var location: Location
     private lateinit var photosAdapter: PhotosAdapter
+    private lateinit var reviewsAdapter: ReviewsAdapter
 
     /** LifeCycle **/
 
@@ -124,6 +126,9 @@ class LocationDetailsFragment : Fragment() {
         binding.rvPhotos.adapter = photosAdapter
         binding.rvPhotos.layoutManager = LinearLayoutManager(requireContext(),
             LinearLayoutManager.HORIZONTAL, false)
+        reviewsAdapter = ReviewsAdapter(requireContext())
+        binding.rvReviews.adapter = reviewsAdapter
+        binding.rvReviews.layoutManager = LinearLayoutManager(requireContext())
         mActivity.run {
             showHomeButton()
             title = location.name
@@ -141,6 +146,7 @@ class LocationDetailsFragment : Fragment() {
         }
         setSchedule(locationDetails.schedule)
         photosAdapter.photos = locationDetails.images
+        reviewsAdapter.reviews = locationDetails.reviews
     }
 
     private fun setSchedule(schedule: List<Schedule>) {
