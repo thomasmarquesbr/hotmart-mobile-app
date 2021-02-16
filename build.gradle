@@ -1,0 +1,27 @@
+apply from: 'dependencies.gradle'
+
+buildscript {
+    ext.kotlin_version = "1.4.30"
+    repositories {
+        google()
+        jcenter()
+        maven { url 'http://dl.bintray.com/amulyakhare/maven' }
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.1.2"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.3"
+        classpath "io.realm:realm-gradle-plugin:7.0.1"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

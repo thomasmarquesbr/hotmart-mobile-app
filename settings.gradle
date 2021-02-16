@@ -1,0 +1,6 @@
+include ':StorageRepository'
+include ':RemoteRepository'
+include ':DataRepository'
+include ':Domain'
+include ':app'
+rootProject.name = "Hotmart Mobile App"
