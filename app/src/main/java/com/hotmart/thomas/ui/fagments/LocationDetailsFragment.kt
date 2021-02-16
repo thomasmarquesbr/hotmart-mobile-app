@@ -6,7 +6,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.hotmart.domain.models.presentation.Location
 import com.hotmart.domain.models.presentation.LocationDetails
@@ -20,8 +21,9 @@ import com.hotmart.thomas.ui.adapters.ReviewsAdapter
 import com.hotmart.thomas.ui.extensions.navigateWithAnimations
 import com.hotmart.thomas.ui.extensions.showError
 import com.hotmart.thomas.ui.viewmodels.MainViewModel
-import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
+import kotlin.math.abs
+import kotlin.math.roundToInt
 
 
 class LocationDetailsFragment : Fragment() {
@@ -122,20 +124,45 @@ class LocationDetailsFragment : Fragment() {
     }
 
     private fun initializeViews() {
-        photosAdapter = PhotosAdapter(requireContext())
-        binding.rvPhotos.adapter = photosAdapter
-        binding.rvPhotos.layoutManager = LinearLayoutManager(requireContext(),
-            LinearLayoutManager.HORIZONTAL, false)
+        setupActionBar()
+        setupPhotosList()
+        setupReviewsList()
+        viewModel.getDetails(location)
+    }
+
+    private fun setupActionBar() {
+        mActivity.run {
+            setSupportActionBar(binding.toolbar)
+            supportActionBar?.run {
+                setHomeButtonEnabled(true)
+                setDisplayHomeAsUpEnabled(true)
+                title = location.name
+            }
+            title = location.name
+        }
+        binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            val maxScroll = appBarLayout.totalScrollRange.toFloat()
+            binding.llToolbar.alpha = 1 - (abs(verticalOffset).toFloat() / maxScroll)
+        })
+        Glide.with(this)
+            .load(location.getImageUrl())
+            .error(R.drawable.ic_broken_image)
+            .into(binding.appCompatImageView)
+    }
+
+    private fun setupReviewsList() {
         reviewsAdapter = ReviewsAdapter(requireContext())
         binding.rvReviews.adapter = reviewsAdapter
         binding.rvReviews.layoutManager = LinearLayoutManager(requireContext())
-        mActivity.run {
-            showHomeButton()
-            title = location.name
-            expandActionBar()
-            setImage(location.getImageUrl())
-        }
-        viewModel.getDetails(location)
+    }
+
+    private fun setupPhotosList() {
+        photosAdapter = PhotosAdapter(requireContext())
+        binding.rvPhotos.adapter = photosAdapter
+        binding.rvPhotos.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.HORIZONTAL, false
+        )
     }
 
     private fun setDetails(locationDetails: LocationDetails) {
@@ -146,16 +173,100 @@ class LocationDetailsFragment : Fragment() {
             tvSeeMore.text = getString(R.string.see_more_reviews, locationDetails.totalReviews)
         }
         setSchedule(locationDetails.schedule)
+        setPhone(locationDetails.phone)
+        setReviewValue(locationDetails.review)
         photosAdapter.photos = locationDetails.images
         reviewsAdapter.reviews = locationDetails.reviews
     }
 
-    private fun setSchedule(schedule: List<Schedule>) {
+    private fun setPhone(phone: String) {
+        val formattedPhone = StringBuilder()
+        formattedPhone.append("${phone.substring(0, 3)} ")
+        formattedPhone.append("${phone.substring(3, 5)} ")
+        formattedPhone.append("${phone.substring(5, 10)} ")
+        formattedPhone.append("${phone.substring(10, phone.length)} ")
+        binding.tvPhone.text = formattedPhone.toString()
+    }
 
+    private fun setSchedule(schedule: List<Schedule>) {
+        val schedulesMap = mutableMapOf<String, String>()
+        val daysArray = resources.getStringArray(R.array.days)
+        schedule.forEach { s ->
+            s.convertToMap(schedulesMap, daysArray)
+        }
+        var schedules = StringBuilder()
+        schedulesMap.forEach { (time, days) ->
+            if (time != "-") {
+                var formatedDays = days.substring(0, days.length - 2)
+                if (formatedDays.count { it == ',' } > 3) {
+                    val splitedDays = formatedDays.split(",")
+                    formatedDays = "${splitedDays.first()} á ${splitedDays.last()}"
+                }
+                schedules.append("${formatedDays}: ${time.replace("-", " ás ")}\n")
+            }
+        }
+        val scheduleText = if (schedules.length > 2)
+            schedules.substring(0, schedules.length - 2)
+        else
+            schedules.toString()
+        binding.tvSchedule.text = scheduleText
+    }
+
+    private fun setReviewValue(review: Double) {
+        binding.tvReviewValue.text = review.toString()
+        when (review.roundToInt()) {
+            1 -> {
+                binding.ivStar1.setBackgroundResource(R.drawable.ic_on)
+                binding.ivStar2.setBackgroundResource(R.drawable.ic_off)
+                binding.ivStar3.setBackgroundResource(R.drawable.ic_off)
+                binding.ivStar4.setBackgroundResource(R.drawable.ic_off)
+                binding.ivStar5.setBackgroundResource(R.drawable.ic_off)
+            }
+            2 -> {
+                binding.ivStar1.setBackgroundResource(R.drawable.ic_on)
+                binding.ivStar2.setBackgroundResource(R.drawable.ic_on)
+                binding.ivStar3.setBackgroundResource(R.drawable.ic_off)
+                binding.ivStar4.setBackgroundResource(R.drawable.ic_off)
+                binding.ivStar5.setBackgroundResource(R.drawable.ic_off)
+            }
+            3 -> {
+                binding.ivStar1.setBackgroundResource(R.drawable.ic_on)
+                binding.ivStar2.setBackgroundResource(R.drawable.ic_on)
+                binding.ivStar3.setBackgroundResource(R.drawable.ic_on)
+                binding.ivStar4.setBackgroundResource(R.drawable.ic_off)
+                binding.ivStar5.setBackgroundResource(R.drawable.ic_off)
+            }
+            4 -> {
+                binding.ivStar1.setBackgroundResource(R.drawable.ic_on)
+                binding.ivStar2.setBackgroundResource(R.drawable.ic_on)
+                binding.ivStar3.setBackgroundResource(R.drawable.ic_on)
+                binding.ivStar4.setBackgroundResource(R.drawable.ic_on)
+                binding.ivStar5.setBackgroundResource(R.drawable.ic_off)
+            }
+            5 -> {
+                binding.ivStar1.setBackgroundResource(R.drawable.ic_on)
+                binding.ivStar2.setBackgroundResource(R.drawable.ic_on)
+                binding.ivStar3.setBackgroundResource(R.drawable.ic_on)
+                binding.ivStar4.setBackgroundResource(R.drawable.ic_on)
+                binding.ivStar5.setBackgroundResource(R.drawable.ic_on)
+            }
+            else -> {
+                binding.ivStar1.setBackgroundResource(R.drawable.ic_off)
+                binding.ivStar2.setBackgroundResource(R.drawable.ic_off)
+                binding.ivStar3.setBackgroundResource(R.drawable.ic_off)
+                binding.ivStar4.setBackgroundResource(R.drawable.ic_off)
+                binding.ivStar5.setBackgroundResource(R.drawable.ic_off)
+            }
+        }
     }
 
     private fun showAllViews() {
         binding.run {
+            ivStar1.visibility = View.VISIBLE
+            ivStar2.visibility = View.VISIBLE
+            ivStar3.visibility = View.VISIBLE
+            ivStar4.visibility = View.VISIBLE
+            ivStar5.visibility = View.VISIBLE
             tvAbout.visibility = View.VISIBLE
             tvAboutContent.visibility = View.VISIBLE
             tvAddress.visibility = View.VISIBLE
@@ -174,6 +285,11 @@ class LocationDetailsFragment : Fragment() {
 
     private fun hideAllViews() {
         binding.run {
+            ivStar1.visibility = View.GONE
+            ivStar2.visibility = View.GONE
+            ivStar3.visibility = View.GONE
+            ivStar4.visibility = View.GONE
+            ivStar5.visibility = View.GONE
             tvAbout.visibility = View.GONE
             tvAboutContent.visibility = View.GONE
             tvAddress.visibility = View.GONE

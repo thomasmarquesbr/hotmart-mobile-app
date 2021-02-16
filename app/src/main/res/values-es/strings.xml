@@ -12,4 +12,14 @@
     <string name="about">Acerca de</string>
     <string name="reviews">Reseñas</string>
     <string name="see_more_reviews">Ver todas las reseñas de %d >></string>
+    <array name="days">
+        <item>dom</item>
+        <item>lun</item>
+        <item>mar</item>
+        <item>mié</item>
+        <item>jue</item>
+        <item>vie</item>
+        <item>sáb</item>
+    </array>
+
 </resources>

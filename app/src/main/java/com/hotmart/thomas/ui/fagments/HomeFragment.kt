@@ -85,11 +85,19 @@ class HomeFragment: Fragment() {
     /** Functions **/
 
     private fun initializeViews() {
+        setupActionBar()
+        setupLocationsList()
+        viewModel.getLocations()
+    }
+
+    private fun setupActionBar() {
         mActivity.run {
-            hideHomeButton()
-            collapseActionBar()
+            setSupportActionBar(binding.toolbar)
+            title = getString(R.string.home)
         }
-        binding.rvLocations.isNestedScrollingEnabled = false
+    }
+
+    private fun setupLocationsList() {
         locationsAdapter = LocationsAdapter(
             requireContext(),
             onItemClicked = { location ->
@@ -97,9 +105,10 @@ class HomeFragment: Fragment() {
                 findNavController().navigateWithAnimations(action)
             })
         binding.rvLocations.adapter = locationsAdapter
-        binding.rvLocations.layoutManager = StaggeredGridLayoutManager(2,
-            LinearLayoutManager.VERTICAL)
-        viewModel.getLocations()
+        binding.rvLocations.layoutManager = StaggeredGridLayoutManager(
+            2,
+            LinearLayoutManager.VERTICAL
+        )
     }
 
     private fun initializeViewModelObservers() {

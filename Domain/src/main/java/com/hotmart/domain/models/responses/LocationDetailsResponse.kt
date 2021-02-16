@@ -1,9 +1,7 @@
 package com.hotmart.domain.models.responses
 
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import org.json.JSONArray
-import java.lang.reflect.Type
 
 
 data class LocationDetailsResponse(
@@ -17,6 +15,10 @@ data class LocationDetailsResponse(
     val schedule: Any
 ) {
 
+    /** Em alguns objetos retornados pela API REST o objeto "schedule" retorna tanto um Array quanto
+     * um Objeto json para alguns "ids", portanto foi necessário a adaptação abaixo para mapear cada
+     * um desses tipos de estruturas de dados
+     */
     val schedules: List<ScheduleResponse>
         get() {
             return if (schedule is List<*>) {
