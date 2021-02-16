@@ -31,16 +31,9 @@ class MainActivity: AppCompatActivity() {
         setupNavigation()
     }
 
-    private fun initializeViewModelObservers() {
-
-    }
-
     private fun setupNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_sale) as NavHostFragment
         NavigationUI.setupWithNavController(binding.bottomNavigation, navHostFragment.navController)
-        navHostFragment.navController.addOnDestinationChangedListener { _, destination, _ ->
-            title = destination.label.toString()
-        }
     }
 
 }

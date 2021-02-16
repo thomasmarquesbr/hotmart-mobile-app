@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdkVersion application.compileSdkVersion
@@ -47,6 +49,4 @@ dependencies {
     implementation project(":DataRepository")
     implementation project(":RemoteRepository")
     implementation project(":StorageRepository")
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hotmart Mobile App</string>
+    <string name="unexpected_error_get_locations">Unexpected error fetching locations</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="map">Map</string>
+    <string name="profile">Profile</string>
+    <string name="action_share">Share</string>
+    <string name="unexpected_error_get_location_details">Unexpected error while fetching details</string>
+    <string name="photos">Photos</string>
+    <string name="about">About</string>
+    <string name="reviews">Reviews</string>
+    <string name="see_more_reviews">See all %d reviews >></string>
+    <array name="days">
+        <item>sun</item>
+        <item>mon</item>
+        <item>tue</item>
+        <item>wed</item>
+        <item>thu</item>
+        <item>fri</item>
+        <item>sat</item>
+    </array>
+</resources>

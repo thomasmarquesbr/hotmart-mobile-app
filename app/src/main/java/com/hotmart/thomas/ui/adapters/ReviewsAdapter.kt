@@ -1,50 +1,62 @@
 package com.hotmart.thomas.ui.adapters
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.hotmart.domain.models.presentation.Location
+import com.amulyakhare.textdrawable.TextDrawable
+import com.hotmart.domain.models.presentation.Review
 import com.hotmart.thomas.R
-import com.hotmart.thomas.databinding.LocationsItemAdapterBinding
-import com.hotmart.thomas.ui.extensions.setImageResourceFrom
+import com.hotmart.thomas.databinding.ReviewsItemAdapterBinding
+import java.util.*
 import kotlin.math.roundToInt
 
 
-class LocationsAdapter(
-    val onItemClicked: (Location) -> Unit
-): RecyclerView.Adapter<LocationsAdapter.LocationsViewHolder>() {
+class ReviewsAdapter(
+    private val context: Context
+): RecyclerView.Adapter<ReviewsAdapter.ReviewsViewHolder>() {
 
-    var locations = listOf<Location>()
+    var reviews = listOf<Review>()
         set(value) {
             field = value
             this.notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationsViewHolder {
-        val binding = LocationsItemAdapterBinding
-                .inflate(LayoutInflater.from(parent.context), parent, false)
-        return LocationsViewHolder(binding)
-    }
-    override fun onBindViewHolder(holder: LocationsViewHolder, position: Int) {
-        val item = locations[position]
-        holder.bind(item, onClick = { onItemClicked(it) })
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ReviewsAdapter.ReviewsViewHolder {
+        val binding = ReviewsItemAdapterBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+        return ReviewsViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = locations.size
+    override fun onBindViewHolder(holder: ReviewsAdapter.ReviewsViewHolder, position: Int) {
+        val item = reviews[position]
+        holder.bind(item)
+    }
+
+    override fun getItemCount(): Int = reviews.size
 
     /** ViewHolder **/
 
-    inner class LocationsViewHolder(
-        private val binding: LocationsItemAdapterBinding
+    inner class ReviewsViewHolder(
+        private val binding: ReviewsItemAdapterBinding
     ): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Location, onClick: (Location) -> Unit) {
-            binding.tvName.text = item.name
-            binding.tvType.text = item.type
-            binding.tvReview.text = item.review.toString()
-            binding.root.setOnClickListener { onClick(item) }
-            binding.ivImage.setImageResourceFrom(item.getImageUrl())
-            when (item.review.roundToInt()) {
+        private val colors = listOf(
+            Color.RED, Color.BLUE, Color.GRAY, Color.GREEN, Color.YELLOW, Color.CYAN, Color.BLACK
+        )
+
+        @SuppressLint("SetTextI18n")
+        fun bind(item: Review) {
+            binding.tvTitle.text = item.title
+            binding.tvComment.text = item.comment
+            binding.tvNameAddress.text = "${item.name}, ${item.address}"
+            binding.ivAvatar.setImageDrawable(generateDrawable(item))
+            when (item.value.roundToInt()) {
                 1 -> {
                     binding.ivStar1.setBackgroundResource(R.drawable.ic_on)
                     binding.ivStar2.setBackgroundResource(R.drawable.ic_off)
@@ -90,6 +102,18 @@ class LocationsAdapter(
             }
         }
 
+        private fun generateDrawable(item: Review): TextDrawable? {
+            val color = colors[Random().nextInt(colors.size)]
+            val words = item.name.split(" ")
+            val letters: String = if (words.size > 1)
+                "${words[0].first()}${words[1].first()}".toUpperCase()
+            else
+                words[0].first().toUpperCase().toString()
+            return TextDrawable.builder()
+                .buildRound(letters, color)
+        }
+
     }
+
 
 }

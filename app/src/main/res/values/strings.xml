@@ -6,4 +6,19 @@
     <string name="home">Home</string>
     <string name="map">Mapa</string>
     <string name="profile">Perfil</string>
+    <string name="action_share">Compartilhar</string>
+    <string name="unexpected_error_get_location_details">Erro inesperado ao buscar detalhes</string>
+    <string name="photos">Fotos</string>
+    <string name="about">Sobre</string>
+    <string name="reviews">Reviews</string>
+    <string name="see_more_reviews">Ver todos os %d reviews >></string>
+    <array name="days">
+        <item>dom</item>
+        <item>seg</item>
+        <item>ter</item>
+        <item>qua</item>
+        <item>qui</item>
+        <item>sex</item>
+        <item>sáb</item>
+    </array>
 </resources>
