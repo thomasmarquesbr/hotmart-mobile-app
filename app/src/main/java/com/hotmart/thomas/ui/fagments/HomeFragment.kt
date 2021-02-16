@@ -99,7 +99,6 @@ class HomeFragment: Fragment() {
 
     private fun setupLocationsList() {
         locationsAdapter = LocationsAdapter(
-            requireContext(),
             onItemClicked = { location ->
                 val action = HomeFragmentDirections.actionTab1ToLocationDetailsFragment(location)
                 findNavController().navigateWithAnimations(action)
@@ -112,7 +111,7 @@ class HomeFragment: Fragment() {
     }
 
     private fun initializeViewModelObservers() {
-        viewModel.locationsLiveData.observe(this, { state ->
+        viewModel.locationsLiveData.observe(viewLifecycleOwner, { state ->
             when (state) {
                 is ResultState.Success -> setupScreenForSuccessGetLocations(state.data)
                 is ResultState.Loading -> setupScreenForLoadingGetLocations()

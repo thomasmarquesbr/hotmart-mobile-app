@@ -1,18 +1,16 @@
 package com.hotmart.thomas.ui.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.hotmart.domain.models.presentation.Location
 import com.hotmart.thomas.R
 import com.hotmart.thomas.databinding.LocationsItemAdapterBinding
+import com.hotmart.thomas.ui.extensions.setImageResourceFrom
 import kotlin.math.roundToInt
 
 
 class LocationsAdapter(
-    private val context: Context,
     val onItemClicked: (Location) -> Unit
 ): RecyclerView.Adapter<LocationsAdapter.LocationsViewHolder>() {
 
@@ -45,10 +43,7 @@ class LocationsAdapter(
             binding.tvType.text = item.type
             binding.tvReview.text = item.review.toString()
             binding.root.setOnClickListener { onClick(item) }
-            Glide.with(context)
-                .load(item.getImageUrl())
-                .error(R.drawable.ic_broken_image)
-                .into(binding.ivImage)
+            binding.ivImage.setImageResourceFrom(item.getImageUrl())
             when (item.review.roundToInt()) {
                 1 -> {
                     binding.ivStar1.setBackgroundResource(R.drawable.ic_on)

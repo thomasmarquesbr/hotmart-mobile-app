@@ -1,17 +1,13 @@
 package com.hotmart.thomas.ui.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.hotmart.thomas.R
 import com.hotmart.thomas.databinding.PhotosItemAdapterBinding
+import com.hotmart.thomas.ui.extensions.setImageResourceFrom
 
 
-class PhotosAdapter(
-    private val context: Context,
-): RecyclerView.Adapter<PhotosAdapter.PhotosViewHolder>() {
+class PhotosAdapter: RecyclerView.Adapter<PhotosAdapter.PhotosViewHolder>() {
 
     var photos = listOf<String>()
         set(value) {
@@ -42,10 +38,7 @@ class PhotosAdapter(
     ): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: String) {
-            Glide.with(context)
-                .load(item)
-                .error(R.drawable.ic_broken_image)
-                .into(binding.ivImage)
+            binding.ivImage.setImageResourceFrom(item)
         }
 
     }

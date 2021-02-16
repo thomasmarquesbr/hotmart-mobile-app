@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.hotmart.domain.models.presentation.Location
@@ -19,6 +18,7 @@ import com.hotmart.thomas.ui.activities.MainActivity
 import com.hotmart.thomas.ui.adapters.PhotosAdapter
 import com.hotmart.thomas.ui.adapters.ReviewsAdapter
 import com.hotmart.thomas.ui.extensions.navigateWithAnimations
+import com.hotmart.thomas.ui.extensions.setImageResourceFrom
 import com.hotmart.thomas.ui.extensions.showError
 import com.hotmart.thomas.ui.viewmodels.MainViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -114,7 +114,7 @@ class LocationDetailsFragment : Fragment() {
     }
 
     private fun initializeViewModelObservers() {
-        viewModel.locationDetailsLiveData.observe(this, { state ->
+        viewModel.locationDetailsLiveData.observe(viewLifecycleOwner, { state ->
             when (state) {
                 is ResultState.Success -> setupScreenForSuccessGetLocationDetails(state.data)
                 is ResultState.Loading -> setupScreenForLoadingGetLocationDetails()
@@ -140,14 +140,12 @@ class LocationDetailsFragment : Fragment() {
             }
             title = location.name
         }
-        binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-            val maxScroll = appBarLayout.totalScrollRange.toFloat()
-            binding.llToolbar.alpha = 1 - (abs(verticalOffset).toFloat() / maxScroll)
-        })
-        Glide.with(this)
-            .load(location.getImageUrl())
-            .error(R.drawable.ic_broken_image)
-            .into(binding.appCompatImageView)
+        binding.appBar.addOnOffsetChangedListener(AppBarLayout
+            .OnOffsetChangedListener { appBarLayout, verticalOffset ->
+                val maxScroll = appBarLayout.totalScrollRange.toFloat()
+                binding.llToolbar.alpha = 1 - (abs(verticalOffset).toFloat() / maxScroll)
+            })
+        binding.appCompatImageView.setImageResourceFrom(location.getImageUrl())
     }
 
     private fun setupReviewsList() {
@@ -157,7 +155,7 @@ class LocationDetailsFragment : Fragment() {
     }
 
     private fun setupPhotosList() {
-        photosAdapter = PhotosAdapter(requireContext())
+        photosAdapter = PhotosAdapter()
         binding.rvPhotos.adapter = photosAdapter
         binding.rvPhotos.layoutManager = LinearLayoutManager(
             requireContext(),
@@ -181,10 +179,10 @@ class LocationDetailsFragment : Fragment() {
 
     private fun setPhone(phone: String) {
         val formattedPhone = StringBuilder()
-        formattedPhone.append("${phone.substring(0, 3)} ")
-        formattedPhone.append("${phone.substring(3, 5)} ")
-        formattedPhone.append("${phone.substring(5, 10)} ")
-        formattedPhone.append("${phone.substring(10, phone.length)} ")
+        formattedPhone.append("${phone.substring(0, 3)} ") // Country code
+        formattedPhone.append("${phone.substring(3, 5)} ") // DDD
+        formattedPhone.append("${phone.substring(5, 10)} ") // part 1
+        formattedPhone.append("${phone.substring(10, phone.length)} ") // part2
         binding.tvPhone.text = formattedPhone.toString()
     }
 
